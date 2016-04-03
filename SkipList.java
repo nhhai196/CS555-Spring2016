@@ -23,18 +23,13 @@ import java.util.Random;
 
 public class SkipList
 {
-	// This field stores the name of the list.
-	private String tableName;
 	
-	//***********INSERT COMMENTS HERE***********************
-	private ArrayList<String> columnNames;
+	private HashedObject myHash;
 	
-	// This field is the negative infinity node on level 0. It will always be
-	// this.
+	private ArrayList<Integer> myElements;
+	
 	private Node bottomNegativeInfinity;
-	
-	// This field is the positive infinity node on level 0. It will always be
-	// this.
+
 	private Node bottomPositiveInfinity;
 	
 	// These two ArrayLists keep track of the negative and positive infinity nodes
@@ -43,29 +38,16 @@ public class SkipList
 	private ArrayList<Node> levelsLeft;
 	private ArrayList<Node> levelsRight;
 	
-	// This node is a reference to the top of the list, which will always be the 
-	// negative infinity node on the uppermost level.
 	private Node top;
+	private Node searchNode;
+	private int numberOfLevels;
+	private int numberOfElements;
 	
-	// This integer is used exclusively by the insert method. More details below
-	// at the method.
-	private int iterator;
-	
-	// The constructor initializes a newly-constructed SkipList to be empty.
-	// Remember that an empty skip list actually contains one level, numbered
-	// "level 0," that contains only the special -INF and +INF nodes.
-	
-	// In this implementation of a SkipList, when an "empty" list is constructed,
-	// level 0 is made, with a negative and positive infinity node. Since the table
-	// has a name, the constructor must be passed a name for the list so that it will
-	// be easy to see which list is which. The ArrayLists that keep track of the levels
-	// are modified, adding level 0 to cell 0, and the top node referring to the top
-	// of the list points to the appropriate negative infinity node at the top of the 
-	// SkipList.
-	public SkipList(String s, ArrayList<String> list)
+	public SkipList(int numElements, ArrayList<Integer> elements, HashedObject hash)
 	{
-		tableName = s;
-		columnNames = list;
+		
+		myHash = hash;
+		myElements = new ArrayList<Integer>(elements);
 		
 		bottomNegativeInfinity = new NegativeInfinityNode();
 		bottomPositiveInfinity = new PositiveInfinityNode();
@@ -77,328 +59,159 @@ public class SkipList
 		levelsLeft.add(bottomNegativeInfinity);
 		levelsRight.add(bottomPositiveInfinity);
 		top = bottomNegativeInfinity;
+		numberOfLevels = 1;
+		numberOfElements = numElements;
+		searchNode = null;
+		initList();
 	}
 	
-	// This method returns the name of the SkipList.
-	public String getTableName()
-	{
-		return tableName;
-	}
-	
-	public ArrayList<String> getColumnNames()
-	{
-		return columnNames;
-	}
-	
-	// insert() takes a key/value pair as parameters, adding the key and its
-	// associated value into the skip list.  If the key already exists in the
-	// skip list, a DuplicateKeyException is thrown.
-	
-	// This implementation of insert() uses recursion to insert a given
-	// key/value pair. As such, there are many local variable used to get
-	// the job done.
-	public void insert(int key, ArrayList<Integer> value)
-	throws DuplicateKeyException
-	{
-		// Here, if this is the very first insert to an "empty" list, a new
-		// empty level above level 0 is created, making the proper references
-		// to the level below it, while modifying level 0 infinity nodes to 
-		// point upwards to it. The top field is then set to the appropriate
-		// node, and the new level is added to the list of levels.
-		if(levelsLeft.size() == 1)
-		{
-			Node negInfinity = new NegativeInfinityNode();
-			Node posInfinity = new PositiveInfinityNode();
+	private void initList() {
+		
+		if(numberOfLevels == 1) {
+			Node temp = top;
+			int key = 0;
+			for(int elem : myElements) {
+				Node create = new NormalNode(key, elem);
+				temp.next = create;
+				create.prev = temp;
+				temp = temp.next;
+				key++;
+			}
+			Node last = levelsRight.get(numberOfLevels-1);
+			last.prev = temp;
+			temp.next = last;
+			Node negInf = new NegativeInfinityNode();
+			Node posInf = new PositiveInfinityNode();
 			
-			negInfinity.below = levelsLeft.get(0);
-			levelsLeft.get(0).above = negInfinity;
-			posInfinity.below = levelsRight.get(0);
-			levelsRight.get(0).above = posInfinity;
-			negInfinity.next = posInfinity;
-			posInfinity.prev = negInfinity;
+			negInf.next = posInf;
+			posInf.prev = negInf;
 			
-			levelsLeft.add(negInfinity);
-			levelsRight.add(posInfinity);
-			top = negInfinity;
+			negInf.below = top;
+			top.above = negInf;
+			posInf.below = last;
+			last.above = posInf;
+			levelsLeft.add(negInf);
+			levelsRight.add(posInf);
+			top = negInf;
+			numberOfLevels++;
+			initList();
 		}
-		
-		// Here, a temporary node is set to start at the top of the list, and it will
-		// works its way across each level, and descend in the list to find the appropriate
-		// place to insert the given key/value pair.
-		Node tempNode = top;
-		
-		// This loop searches for either the node with the same key as the given key, or a node
-		// with a key bigger than the given key and sets tempNode to the appropriate one.
-		while(tempNode.compareToSearchKey(key) < 0)
-			tempNode = tempNode.next;
-		
-		// If the key is found, an exception is thrown, as you cannot insert a duplicate key.
-		if(tempNode.compareToSearchKey(key) == 0)
-			throw new DuplicateKeyException();
-		
-		// Here, if a key bigger than the given key is found in a list, the tempNode backs up
-		// to the previous node and makes some checks on the given situation.
-		else
-		{
-			tempNode = tempNode.prev;
-			
-			// This if statement checks to see if the given tempNode is on level 0. If it is,
-			// the method proceeds to make a random number (to decided whether or not to build
-			// upon the node that is to be inserted). Furthermore, the method actually inserts
-			// a new Normal Node into the list by changing the references of the nodes that the
-			// new node will live between.
-			if(tempNode.below == null)
-			{
-				int random = new Random().nextInt(2);
-				
-				Node tempNode2 = tempNode.next;
-				Node newNode = new NormalNode(key, value);
-				tempNode.next = newNode;
-				newNode.prev = tempNode;
-				newNode.next = tempNode2;
-				tempNode2.prev = newNode;
-				
-				// Here, the iterator field is set to 0. It will be used to check whether
-				// or not a build can be done yet; that is, if it randomly decides to build up
-				// three levels, and there exists only three more levels, a new empty level
-				// must be created above the last level of a build. There must always be a
-				// completely empty level on top of the list.
-				iterator = 0;
-				
-				// These two temporary nodes are only used if a build happens. They are used
-				// like the temporary nodes above: to insert a node in between them.
-				Node tempNode3;
-				Node tempNode4;
-				while(random == 0)
-				{
-					// Resets the random number to a new random to continually decided
-					// whether to randomly build or not.
-					random = new Random().nextInt(2);
-					
-					iterator++;
-					
-					tempNode3 = levelsLeft.get(iterator);
-					
-					while(tempNode3.compareToSearchKey(key) != 1)
-						tempNode3 = tempNode3.next;
-					
-					tempNode4 = tempNode3;
-					tempNode3 = tempNode3.prev;
-					Node builtNode = new NormalNode(key, value);
-					
-					builtNode.below = newNode;
-					newNode.above = builtNode;
-					
-					tempNode3.next = builtNode;
-					builtNode.prev = tempNode3;
-					builtNode.next = tempNode4;
-					tempNode4.prev = builtNode;
-					
-					newNode = builtNode;
-					
-					// Here is where a new empty level is created if necessary.
-					if(iterator == levelsLeft.size() - 1)
-					{
-						Node buildNegInfinity = new NegativeInfinityNode();
-						Node buildPosInfinity = new PositiveInfinityNode();
-						buildNegInfinity.below = levelsLeft.get(iterator);
-						levelsLeft.get(iterator).above = buildNegInfinity;
-						buildPosInfinity.below = levelsRight.get(iterator);
-						levelsRight.get(iterator).above = buildPosInfinity;
-						buildNegInfinity.next = buildPosInfinity;
-						buildPosInfinity.prev = buildNegInfinity;
-						levelsLeft.add(buildNegInfinity);
-						levelsRight.add(buildPosInfinity);
+		else {
+			Node upper = top;
+			Node upperEnd = top.next;
+			Node lower = upper.below;
+			lower = lower.next;
+			while(lower.next != null) {
+				int bit = myHash.getBit();
+				if(bit == -1) {
+					bit = new Random().nextInt(2);
+					if(bit == 1) {
+						// build
+						Node buildNode = new NormalNode(lower.getKey(), lower.getValue());
+						buildNode.below = lower;
+						lower.above = buildNode;
+						buildNode.prev = upper;
+						upper.next = buildNode;
+						upper = upper.next;
 					}
 				}
+				else if(bit == 1) {
+					// build
+					Node buildNode = new NormalNode(lower.getKey(), lower.getValue());
+					buildNode.below = lower;
+					lower.above = buildNode;
+					buildNode.prev = upper;
+					upper.next = buildNode;
+					upper = upper.next;
+				}
+				lower = lower.next;
 			}
-			
-			// If the tempNode is not on the bottom level of the list, a recursive search
-			// occurs on the node below tempNode. To do this, top is temporarily set to 
-			// tempNode.below in order for the recursive search to happen.
-			else
-			{
-				top = tempNode.below;
-				insert(key, value);
+			upper.next = upperEnd;
+			upperEnd.prev = upper;
+			if(upper.prev != null) { // things were added; need to build up and recurse.
+				
+				Node negInf = new NegativeInfinityNode();
+				Node posInf = new PositiveInfinityNode();
+				
+				negInf.next = posInf;
+				posInf.prev = negInf;
+				top.above = negInf;
+				upperEnd.above = posInf;
+				negInf.below = top;
+				posInf.below = upperEnd;
+				levelsLeft.add(negInf);
+				levelsRight.add(posInf);
+				top = negInf;
+				numberOfLevels++;
+				initList();
 			}
-			
-			// Regardless of what happens, top is finally reset to the appropriate node.
-			top = levelsLeft.get(levelsLeft.size() - 1);
 		}
 	}
 	
-
-	// lookup() takes a key as a parameter and returns the value associated
-	// with that key in the skip list.  If the key does not appear in the skip
-	// list, a NoSuchKeyException is thrown.
-	
-	// The lookup method runs the same basic algorithm as insert:
-	// it uses a temporary node to search for the node with the given
-	// key in the list. If the node is found, its values are returned.
-	// If a node with a bigger key is found that is not on level 0 of 
-	// the list, then a recursive call is made, modifying top. Whether
-	// or not the node exists, top is reset to the appropriate node,
-	// and either the values are returned (if the node exists) or an
-	// exception is thrown.
-	public ArrayList<Integer> lookup(int key)
-	throws NoSuchKeyException
-	{
-		Node tempNode = top;
+	public void printList() {
+		System.out.println(myHash.getHash());
+		for(int i = 0; i < levelsLeft.size(); i++) {
+			System.out.print("Level ");
+			System.out.print(i+1);
+			if(i+1 < 10) {
+				System.out.print(" ");
+			}
+			System.out.print(": ");
+			Node temp = levelsLeft.get(i);
+			temp = temp.next;
+			int key;
+			int prevKey;
+			while(temp.next != null) {
+				key = temp.getKey();
+				if(temp.prev.prev == null) {
+					for(int j = 0; j < key; j++) {
+						int len = String.valueOf(myElements.get(j)).length();
+						for(int k = 0; k < len; k++) {
+							System.out.print(" ");
+						}
+						System.out.print(" ");
+					}
+				}
+				else {
+					prevKey = temp.prev.getKey();
+					for(int j = prevKey + 1; j < key; j++) {
+						int len = String.valueOf(myElements.get(j)).length();
+						for(int k = 0; k < len; k++) {
+							System.out.print(" ");
+						}
+						System.out.print(" ");
+					}
+				}
+				System.out.print(temp.getValue());
+				System.out.print(" ");
+				temp = temp.next;
+			}
+			System.out.println();
+		}
+	}
+	// returns the index/key + 1 of the value	
+	public int lookupValue(int value) {
 		
-		while(tempNode.compareToSearchKey(key) < 0)
-			tempNode = tempNode.next;
-		if(tempNode.compareToSearchKey(key) == 1)
-		{
-			tempNode = tempNode.prev;
-			if(tempNode.below != null)
-			{
-				top = tempNode.below;
-				return lookup(key);
+		searchNode = top;
+		while(searchNode.compareToSearchValue(value) < 0) {
+			searchNode = searchNode.next;
+		}
+		if(searchNode.compareToSearchValue(value) == 1) {
+			searchNode = searchNode.prev;
+			if(searchNode.below != null) { // not the bottom of the list
+				top = searchNode.below;
+				return lookupValue(value);
 			}
-			else 
-			{
-				top = levelsLeft.get(levelsLeft.size() - 1);
-				throw new NoSuchKeyException();
+			else { // not in the list
+				searchNode = null;
+				top = levelsLeft.get(numberOfLevels - 1);
+				return -1;
 			}
 		}
-		else
-		{
-			top = levelsLeft.get(levelsLeft.size() - 1);
-			return tempNode.getValue();
-		}
-	}
-	
-	// This is a helper method for the remove() method. This method removes
-	// any extraneous empty levels of the list, ensuring that there is only
-	// at most one empty level above all other levels. This includes reverting
-	// the list back to an empty list in the case of total removal from the list.
-	public void removeLevels()
-	{
-		if(levelsLeft.size() - 2 > -1)
-		{
-			Node tempNode = levelsLeft.get(levelsLeft.size() - 2);
-			int levelNumber = levelsLeft.size() - 2;
-			int topLevel = levelsLeft.size() - 1;
-			int nodeCount = 1;
-			while(tempNode.next != null)
-			{
-				tempNode = tempNode.next;
-				nodeCount++;
-			}
-			if(nodeCount==2)
-			{
-				levelsLeft.get(levelNumber).above = null;
-				levelsRight.get(levelNumber).above = null;
-				levelsLeft.get(topLevel).below = null;
-				levelsLeft.get(topLevel).next = null;
-				levelsRight.get(topLevel).below = null;
-				levelsRight.get(topLevel).prev = null;
-				levelsLeft.remove(topLevel);
-				levelsRight.remove(topLevel);
-				top = levelsLeft.get(levelNumber);
-				removeLevels();
-			}
-			else return;
-		}
-	}
-	
-	
-	// remove() takes a key as a parameter and removes it, along with its
-	// associated value, from the skip list.  If the key does not appear in
-	// the skip list, a NoSuchKeyException is thrown.	
-	
-	// The remove() method works much like the insert method, but in reverse.
-	// Rather than inserting a node, it finds the node to be removes, and modifies
-	// the nodes before and after the node to be removed, having them point around
-	// the node being removed. If that node being removed has a tower, the whole tower
-	// is removed, and any necessary modifications to the levels of the list are made.
-	// If no such node exists, an exception is thrown. Top is always set back to the
-	// appropriate node.
-	public void remove(int key)
-	throws NoSuchKeyException
-	{
-		Node tempNode = top;
-		
-		while(tempNode.compareToSearchKey(key) < 0)
-			tempNode = tempNode.next;
-		if(tempNode.compareToSearchKey(key) == 0)
-		{
-			if(tempNode.below != null)
-			{
-				Node tempNode2 = tempNode.below;
-				Node tempNode3 = tempNode.prev;
-				Node tempNode4 = tempNode.next;
-				tempNode2.above = null;
-				tempNode3.next = tempNode4;
-				tempNode4.prev = tempNode3;
-				tempNode.below = null;
-				tempNode.prev = null;
-				tempNode.next = null;
-				tempNode.above = null;
-				top = tempNode2;
-				remove(key);
-			}
-			else
-			{
-				Node tempNode2 = tempNode.prev;
-				Node tempNode3 = tempNode.next;
-				tempNode2.next = tempNode3;
-				tempNode3.prev = tempNode2;
-				tempNode.below = null;
-				tempNode.prev = null;
-				tempNode.next = null;
-				tempNode.above = null;
-				top = levelsLeft.get(levelsLeft.size() - 1);
-			}
-			removeLevels();
-		}
-		else
-		{
-			tempNode = tempNode.prev;
-			if(tempNode.below == null)
-			{
-				top = levelsLeft.get(levelsLeft.size() - 1);
-				throw new NoSuchKeyException();
-			}
-			else
-			{
-				top = tempNode.below;
-				remove(key);
-			}
-		}
-		System.out.println("Number of levels: " + levelsLeft.size());
-	}
-	
-
-	// update() takes a key and a new value as parameters.  If the key appears
-	// in the skip list already, its value is replaced with the new value; if
-	// not, a NoSuchKeyException is thrown instead.	
-	
-	// The update method works exactly the same way as the lookup method, but
-	// modifies the given node instead of returning its values. Top is always
-	// made to refer back to the appropriate node. If the given node to be 
-	// updated does not exist, an exception is thrown.
-	public void update(int key, ArrayList<Integer> newValue)
-	throws NoSuchKeyException
-	{
-		Node tempNode = top;
-		
-		while(tempNode.compareToSearchKey(key) < 0)
-			tempNode = tempNode.next;
-		if(tempNode.compareToSearchKey(key) == 1)
-		{
-			tempNode = tempNode.prev;
-			if(tempNode.below != null)
-			{
-				top = tempNode.below;
-				update(key, newValue);
-			}
-			else throw new NoSuchKeyException();
-		}
-		else
-		{
-			top = levelsLeft.get(levelsLeft.size() - 1);
-			tempNode.setValue(newValue);
+		else {
+			int key = searchNode.getKey();
+			searchNode = null;
+			return key + 1;
 		}
 	}
 	
@@ -458,12 +271,12 @@ public class SkipList
 		// getValue() returns the value stored in this node.  If the node is
 		// an infinity node, an UnsupportedOperationException is thrown, since
 		// you can't get a value out of an infinity node.
-		public abstract ArrayList<Integer> getValue();
+		public abstract int getValue();
 
 		// setValue() changes the value stored in this node.  If the node is
 		// an infinity node, an UnsupportedOperationException is thrown, since
 		// you can't get a value out of an infinity node.
-		public abstract void setValue(ArrayList<Integer> value);
+		public abstract void setValue(int value);
 
 		// compareToSearchKey() compares the key in this node to the given
 		// search key, returning a negative number if this key is less than
@@ -473,7 +286,7 @@ public class SkipList
 		// specially handle the cases of -INF and +INF (since polymorphism
 		// will cause the appropriate version of compareToSearchKey() to be
 		// called automatically).
-		public abstract int compareToSearchKey(int searchKey);
+		public abstract int compareToSearchValue(int searchKey);
 	}
 
 
@@ -489,17 +302,17 @@ public class SkipList
 			throw new UnsupportedOperationException();
 		}
 		
-		public ArrayList<Integer> getValue()
+		public int getValue()
 		{
 			throw new UnsupportedOperationException();
 		}
 		
-		public void setValue(ArrayList<Integer> value)
+		public void setValue(int value)
 		{
 			throw new UnsupportedOperationException();
 		}
 		
-		public abstract int compareToSearchKey(int searchKey);
+		public abstract int compareToSearchValue(int searchKey);
 	}
 	
 	
@@ -510,7 +323,7 @@ public class SkipList
 		{
 		}
 		
-		public int compareToSearchKey(int searchKey)
+		public int compareToSearchValue(int searchKey)
 		{
 			return -1;
 		}
@@ -524,7 +337,7 @@ public class SkipList
 		{
 		}
 		
-		public int compareToSearchKey(int searchKey)
+		public int compareToSearchValue(int searchKey)
 		{
 			return 1;
 		}
@@ -535,9 +348,9 @@ public class SkipList
 	extends Node
 	{
 		private int key;
-		private ArrayList<Integer> value;
+		private int value;
 
-		public NormalNode(int key, ArrayList<Integer> value)
+		public NormalNode(int key, int value)
 		{
 			this.key = key;
 			this.value = value;
@@ -548,23 +361,23 @@ public class SkipList
 			return key;
 		}
 				
-		public ArrayList<Integer> getValue()
+		public int getValue()
 		{
 			return value;
 		}
 		
-		public void setValue(ArrayList<Integer> value)
+		public void setValue(int value)
 		{
 			this.value = value;
 		}
 		
-		public int compareToSearchKey(int searchKey)
+		public int compareToSearchValue(int searchValue)
 		{
-			if (key < searchKey)
+			if (value < searchValue)
 			{
 				return -1;
 			}
-			else if (key > searchKey)
+			else if (value > searchValue)
 			{
 				return 1;
 			}
