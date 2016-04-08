@@ -84,4 +84,8 @@ public class HashedObject {
 	            return true;
 	    return false;
 	}
+	
+	public byte[] getKey(){
+		return key;
+	}
 }
