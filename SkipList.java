@@ -18,6 +18,9 @@
 // Alex Block
 // 71103773
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -212,6 +215,56 @@ public class SkipList
 			int key = searchNode.getKey();
 			searchNode = null;
 			return key + 1;
+		}
+	}
+	
+	public String corrupted() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
+		String concat = "";
+		// Get the pointer to the first level of the skip list 
+		Node temp = levelsLeft.get(0);
+		temp = temp.next;
+		
+		while(temp.next != null) {
+			concat += Integer.toString(temp.getValue());
+			temp = temp.next;
+		}
+
+		if (myHash.getHash().equals(myHash.hmac_sha1(concat, myHash.getKey())))
+			return "No";
+		else
+			return "Yes";		
+	}
+	
+	// For part 2
+	public String getEmbddedHash (){
+		String result = "";
+		for (int i = 0; i < levelsLeft.size(); i++){
+			Node temp = levelsLeft.get(i);
+			temp = temp.next;
+			while(temp.next != null) {
+				if (temp.above == null){
+					result += "0";
+				}
+				else 
+					result += "1";
+				
+				temp = temp.next;
+			}	
+		}
+		
+		int a = result.length();
+		int b = myHash.getHash().length();
+		if ( a <= b ){
+			if (result.equals(myHash.getHash().substring(0, a)))
+				return "No";
+			else 
+				return "Yes";
+		}
+		else {
+			if (result.equals(result.substring(0, b)))
+				return "No";
+			else 
+				return "Yes";			
 		}
 	}
 	
