@@ -27,7 +27,7 @@ import java.util.Random;
 public class SkipList
 {
 	
-	private HashedObject myHash;
+	private ArrayList<HashedObject> myHash;
 	
 	private ArrayList<Integer> myElements;
 	
@@ -46,7 +46,7 @@ public class SkipList
 	private int numberOfLevels;
 	private int numberOfElements;
 	
-	public SkipList(int numElements, ArrayList<Integer> elements, HashedObject hash)
+	public SkipList(int numElements, ArrayList<Integer> elements, ArrayList<HashedObject> hash)
 	{
 		
 		myHash = hash;
@@ -105,7 +105,7 @@ public class SkipList
 			Node lower = upper.below;
 			lower = lower.next;
 			while(lower.next != null) {
-				int bit = myHash.getBit();
+				int bit = myHash.get(0).getBit();
 				if(bit == -1) {
 					bit = new Random().nextInt(2);
 					if(bit == 1) {
@@ -152,7 +152,7 @@ public class SkipList
 	}
 	
 	public void printList() {
-		System.out.println(myHash.getHash());
+		System.out.println(myHash.get(0).getHash());
 		for(int i = 0; i < levelsLeft.size(); i++) {
 			System.out.print("Level ");
 			System.out.print(i+1);
@@ -228,11 +228,66 @@ public class SkipList
 			concat += Integer.toString(temp.getValue());
 			temp = temp.next;
 		}
-
-		if (myHash.getHash().equals(myHash.hmac_sha1(concat, myHash.getKey())))
+		
+		HashedObject firstHash = myHash.get(0);
+		if (firstHash.getHash().equals(firstHash.hmac_sha1(concat, firstHash.getKey())))
 			return "No";
 		else
 			return "Yes";		
+	}
+
+	public int lookupbyIndex (int index){
+		searchNode = top;
+		while(searchNode.compareToSearchKey(index) < 0) {
+			searchNode = searchNode.next;
+		}
+		if(searchNode.compareToSearchKey(index) == 1) {
+			searchNode = searchNode.prev;
+			if(searchNode.below != null) { // not the bottom of the list
+				top = searchNode.below;
+				return lookupbyIndex(index);
+			}
+			else { // not in the list
+				searchNode = null;
+				top = levelsLeft.get(numberOfLevels - 1);
+				return -1;
+			}
+		}
+		else {
+			int value = searchNode.getValue();
+			searchNode = null;
+			return value;
+		}
+	}
+	
+	public String get_items_with_same_bit(int pos){
+		String result = "";
+		for (int i = 0; i < numberOfElements; i++){
+			String s =  Integer.toBinaryString(i);
+			if (s.length() > pos){
+				if (s.charAt(s.length() - pos - 1) == '1'){
+					result += Integer.toUnsignedString(lookupbyIndex(i));
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	public int pinpointCorruptedItem() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
+		String result = "";
+		for (int i = 1; i < myHash.size(); i++){
+			HashedObject currentHash = myHash.get(i);
+			if (currentHash.equals(currentHash.hmac_sha1(get_items_with_same_bit(i-1), currentHash.getKey())))
+				result += "0";
+			else 
+				result += "1";
+		}
+		
+		if (result != "")
+			return Integer.parseInt(result, 2);
+		else 
+			return 0;
 	}
 	
 	// For part 2
@@ -253,9 +308,9 @@ public class SkipList
 		}
 		
 		int a = result.length();
-		int b = myHash.getHash().length();
+		int b = myHash.get(0).getHash().length();
 		if ( a <= b ){
-			if (result.equals(myHash.getHash().substring(0, a)))
+			if (result.equals(myHash.get(0).getHash().substring(0, a)))
 				return "No";
 			else 
 				return "Yes";
@@ -340,6 +395,7 @@ public class SkipList
 		// will cause the appropriate version of compareToSearchKey() to be
 		// called automatically).
 		public abstract int compareToSearchValue(int searchKey);
+		public abstract int compareToSearchKey(int index);
 	}
 
 
@@ -380,6 +436,10 @@ public class SkipList
 		{
 			return -1;
 		}
+
+		public int compareToSearchKey(int index) {
+			return -1;
+		}
 	}
 	
 	
@@ -392,6 +452,10 @@ public class SkipList
 		
 		public int compareToSearchValue(int searchKey)
 		{
+			return 1;
+		}
+
+		public int compareToSearchKey(int index) {
 			return 1;
 		}
 	}
@@ -431,6 +495,22 @@ public class SkipList
 				return -1;
 			}
 			else if (value > searchValue)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		
+		public int compareToSearchKey(int index)
+		{
+			if (key < index)
+			{
+				return -1;
+			}
+			else if (key > index)
 			{
 				return 1;
 			}
