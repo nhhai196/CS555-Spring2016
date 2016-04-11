@@ -27,6 +27,7 @@ public class SkipList
 {
 	
 	private HashedObject myHash;
+	private String embeddedHash;
 	
 	private ArrayList<Integer> myElements;
 	
@@ -65,6 +66,111 @@ public class SkipList
 		numberOfElements = numElements;
 		searchNode = null;
 		initList();
+	}
+	
+	// Another construtor for constructing skip list in part 2
+	public SkipList(ArrayList <ArrayList<Integer>> llelements, String key) throws Exception{
+		myHash = new HashedObject(llelements.get(0), key, false);
+		myElements = new ArrayList<Integer>(llelements.get(0));
+		
+		bottomNegativeInfinity = new NegativeInfinityNode();
+		bottomPositiveInfinity = new PositiveInfinityNode();
+		bottomNegativeInfinity.next = bottomPositiveInfinity;
+		bottomPositiveInfinity.prev = bottomNegativeInfinity;
+
+		levelsLeft = new ArrayList<>();
+		levelsRight = new ArrayList<>();
+		levelsLeft.add(bottomNegativeInfinity);
+		levelsRight.add(bottomPositiveInfinity);
+		top = bottomNegativeInfinity;
+		numberOfLevels = 1;
+		numberOfElements = llelements.get(0).size();
+		searchNode = null;
+		embeddedHash = initList2(llelements);
+	}
+	
+	private String initList2(ArrayList <ArrayList<Integer>> llelements){
+		int loop = llelements.size();
+		String embedhash = "";
+		for (int j = 0; j < loop; j++){
+			
+			if(numberOfLevels == 1) {
+				Node temp = top;
+				int key = 0;
+				for(int elem : myElements) {
+					Node create = new NormalNode(key, elem);
+					temp.next = create;
+					create.prev = temp;
+					temp = temp.next;
+					key++;
+				}
+				Node last = levelsRight.get(numberOfLevels-1);
+				last.prev = temp;
+				temp.next = last;
+				Node negInf = new NegativeInfinityNode();
+				Node posInf = new PositiveInfinityNode();
+				
+				negInf.next = posInf;
+				posInf.prev = negInf;
+				
+				negInf.below = top;
+				top.above = negInf;
+				posInf.below = last;
+				last.above = posInf;
+				levelsLeft.add(negInf);
+				levelsRight.add(posInf);
+				top = negInf;
+				numberOfLevels++;
+				//initList2(llelements);
+			}
+			else {
+				Node upper = top;
+				Node upperEnd = top.next;
+				Node lower = upper.below;
+				lower = lower.next;
+				ArrayList <Integer> eles = llelements.get(numberOfLevels - 1);
+	
+				for (int i = 0; i < eles.size(); i++){
+					while(lower.next != null) {
+						if (lower.getValue() == eles.get(i)){
+							// build
+							Node buildNode = new NormalNode(lower.getKey(), lower.getValue());
+							buildNode.below = lower;
+							lower.above = buildNode;
+							buildNode.prev = upper;
+							upper.next = buildNode;
+							upper = upper.next;
+							
+							embedhash += "1";
+						}
+						else 
+							embedhash += "0";
+						
+						lower = lower.next;
+					}
+				}
+				upper.next = upperEnd;
+				upperEnd.prev = upper;
+				if(upper.prev != null) { // things were added; need to build up and recurse.
+					
+					Node negInf = new NegativeInfinityNode();
+					Node posInf = new PositiveInfinityNode();
+					
+					negInf.next = posInf;
+					posInf.prev = negInf;
+					top.above = negInf;
+					upperEnd.above = posInf;
+					negInf.below = top;
+					posInf.below = upperEnd;
+					levelsLeft.add(negInf);
+					levelsRight.add(posInf);
+					top = negInf;
+					numberOfLevels++;
+					//initList2(llelements);
+				}
+			}
+		}
+		return embedhash;
 	}
 	
 	private void initList() {
@@ -261,6 +367,80 @@ public class SkipList
 		return returnValue;
 	}
 	
+	public String corrupted(String key) throws Exception {
+		String concat = "";
+		// Get the pointer to the first level of the skip list 
+		Node temp = levelsLeft.get(0);
+		temp = temp.next;
+		
+		while(temp.next != null) {
+			concat += Integer.toString(temp.getValue());
+			temp = temp.next;
+		}
+		
+		if (myHash.getHash().equals(myHash.hmac_sha1(concat, key)))
+			return "No";
+		else
+			return "Yes";		
+	}
+	
+	/*
+	public int lookupbyIndex (int index){
+		searchNode = top;
+		while(searchNode.compareToSearchKey(index) < 0) {
+			searchNode = searchNode.next;
+		}
+		if(searchNode.compareToSearchKey(index) == 1) {
+			searchNode = searchNode.prev;
+			if(searchNode.below != null) { // not the bottom of the list
+				top = searchNode.below;
+				return lookupbyIndex(index);
+			}
+			else { // not in the list
+				searchNode = null;
+				top = levelsLeft.get(numberOfLevels - 1);
+				return -1;
+			}
+		}
+		else {
+			int value = searchNode.getValue();
+			searchNode = null;
+			return value;
+		}
+	}
+	*/
+	/*
+	public String get_items_with_same_bit(int pos){
+		String result = "";
+		for (int i = 0; i < numberOfElements; i++){
+			String s =  Integer.toBinaryString(i);
+			if (s.length() > pos){
+				if (s.charAt(s.length() - pos - 1) == '1'){
+					result += Integer.toUnsignedString(lookupbyIndex(i));
+				}
+			}
+		}
+		
+		return result;
+	}
+	*/
+	public int pinpointCorruptedItem(String key) throws Exception {
+		String result = "";
+		String [] hashList = embeddedHash.split("(?<=\\G.{160})");
+		for (int i = 1; i < myHash.getHashArray().length; i++){
+			 String temp = myHash.getHashArray()[i];
+			if (temp.equals(hashList[i]))
+				result += "0";
+			else 
+				result += "1";
+		}
+		
+		if (result != "")
+			return Integer.parseInt(result, 2);
+		else 
+			return 0;
+	}
+	
 	// There are three kinds of nodes in a skip list.  All kinds of nodes
 	// have references that point to the node before, after, above, and
 	// below that node.  But, other than that, there are differences between
@@ -333,6 +513,8 @@ public class SkipList
 		// will cause the appropriate version of compareToSearchKey() to be
 		// called automatically).
 		public abstract int compareToSearchValue(int searchKey);
+		
+		public abstract int compareToSearchKey(int index) ;
 	}
 
 
@@ -373,6 +555,12 @@ public class SkipList
 		{
 			return -1;
 		}
+
+		@Override
+		public int compareToSearchKey(int index) {
+			// TODO Auto-generated method stub
+			return -1;
+		}
 	}
 	
 	
@@ -386,6 +574,12 @@ public class SkipList
 		public int compareToSearchValue(int searchKey)
 		{
 			return 1;
+		}
+
+		@Override
+		public int compareToSearchKey(int index) {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 	}
 	
@@ -424,6 +618,22 @@ public class SkipList
 				return -1;
 			}
 			else if (value > searchValue)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+
+		public int compareToSearchKey(int index) {
+			if (value < index)
+			{
+				return -1;
+			}
+			else if (value > index)
 			{
 				return 1;
 			}
