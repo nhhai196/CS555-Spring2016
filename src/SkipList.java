@@ -18,16 +18,15 @@
 // Alex Block
 // 71103773
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class SkipList
 {
 	
-	private ArrayList<HashedObject> myHash;
+	private HashedObject myHash;
 	
 	private ArrayList<Integer> myElements;
 	
@@ -46,7 +45,7 @@ public class SkipList
 	private int numberOfLevels;
 	private int numberOfElements;
 	
-	public SkipList(int numElements, ArrayList<Integer> elements, ArrayList<HashedObject> hash)
+	public SkipList(int numElements, ArrayList<Integer> elements, HashedObject hash)
 	{
 		
 		myHash = hash;
@@ -105,7 +104,7 @@ public class SkipList
 			Node lower = upper.below;
 			lower = lower.next;
 			while(lower.next != null) {
-				int bit = myHash.get(0).getBit();
+				int bit = myHash.getBit();
 				if(bit == -1) {
 					bit = new Random().nextInt(2);
 					if(bit == 1) {
@@ -151,15 +150,16 @@ public class SkipList
 		}
 	}
 	
-	public void printList() {
-		System.out.println(myHash.get(0).getHash());
+	public String printList() {
+		String out = "";
+		out += myHash.getHash() + "\r\n";
 		for(int i = 0; i < levelsLeft.size(); i++) {
-			System.out.print("Level ");
-			System.out.print(i+1);
+			out += "Level ";
+			out += (i+1);
 			if(i+1 < 10) {
-				System.out.print(" ");
+				out +=" ";
 			}
-			System.out.print(": ");
+			out += ": ";
 			Node temp = levelsLeft.get(i);
 			temp = temp.next;
 			int key;
@@ -170,9 +170,9 @@ public class SkipList
 					for(int j = 0; j < key; j++) {
 						int len = String.valueOf(myElements.get(j)).length();
 						for(int k = 0; k < len; k++) {
-							System.out.print(" ");
+							out += " ";
 						}
-						System.out.print(" ");
+						out += " ";
 					}
 				}
 				else {
@@ -180,17 +180,18 @@ public class SkipList
 					for(int j = prevKey + 1; j < key; j++) {
 						int len = String.valueOf(myElements.get(j)).length();
 						for(int k = 0; k < len; k++) {
-							System.out.print(" ");
+							out += " ";
 						}
-						System.out.print(" ");
+						out += " ";
 					}
 				}
-				System.out.print(temp.getValue());
-				System.out.print(" ");
+				out += temp.getValue();
+				out += " ";
 				temp = temp.next;
 			}
-			System.out.println();
+			out += "\r\n";
 		}
+		return out;
 	}
 	// returns the index/key + 1 of the value	
 	public int lookupValue(int value) {
@@ -218,109 +219,46 @@ public class SkipList
 		}
 	}
 	
-	public String corrupted() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
-		String concat = "";
-		// Get the pointer to the first level of the skip list 
-		Node temp = levelsLeft.get(0);
-		temp = temp.next;
-		
-		while(temp.next != null) {
-			concat += Integer.toString(temp.getValue());
-			temp = temp.next;
-		}
-		
-		HashedObject firstHash = myHash.get(0);
-		if (firstHash.getHash().equals(firstHash.hmac_sha1(concat, firstHash.getKey())))
-			return "No";
-		else
-			return "Yes";		
-	}
-
-	public int lookupbyIndex (int index){
+	public int lookupValueWithLog(int value, PrintWriter p) {
 		searchNode = top;
-		while(searchNode.compareToSearchKey(index) < 0) {
-			searchNode = searchNode.next;
-		}
-		if(searchNode.compareToSearchKey(index) == 1) {
-			searchNode = searchNode.prev;
-			if(searchNode.below != null) { // not the bottom of the list
-				top = searchNode.below;
-				return lookupbyIndex(index);
+		int returnValue = -1;
+		for(int i = numberOfLevels - 1; i >= 0; i--) {
+			p.println("        At level " + i);
+			p.println("        Beginning search through this level");
+			while(searchNode.compareToSearchValue(value) < 0) {
+				p.println("            Value being searched for less than value of current node. Moving to next node");
+				searchNode = searchNode.next;
 			}
-			else { // not in the list
-				searchNode = null;
-				top = levelsLeft.get(numberOfLevels - 1);
-				return -1;
-			}
-		}
-		else {
-			int value = searchNode.getValue();
-			searchNode = null;
-			return value;
-		}
-	}
-	
-	public String get_items_with_same_bit(int pos){
-		String result = "";
-		for (int i = 0; i < numberOfElements; i++){
-			String s =  Integer.toBinaryString(i);
-			if (s.length() > pos){
-				if (s.charAt(s.length() - pos - 1) == '1'){
-					result += Integer.toUnsignedString(lookupbyIndex(i));
+			if(searchNode.compareToSearchValue(value) == 1) {
+				p.println("        Found node with greater value than value being searched for. Moving to previous node with value "
+						+ "less than search value.");
+				searchNode = searchNode.prev;
+				if(searchNode.below != null) { // not the bottom of the list
+					p.println("        There is a node below the current one in the skip list.");
+					try {
+						int val = searchNode.getValue();
+						p.println("        Moving down to next level, starting at node with value " + val);
+					}
+					catch(Exception e) {
+						p.println("        Moving down to next level, starting at node with value MINUS INFINITY.");
+					}
+					searchNode = searchNode.below;
+				}
+				else { // at the bottom. Not in the list
+					p.println("        At bottom of the skip list. Value was not found in skip list.");
+					searchNode = null;
+					break;
 				}
 			}
+			else {
+				int key = searchNode.getKey();
+				p.println("        Found value in list at index " + key);
+				searchNode = null;				
+				returnValue = key + 1;
+				break;
+			}
 		}
-		
-		return result;
-	}
-	
-	public int pinpointCorruptedItem() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException{
-		String result = "";
-		for (int i = 1; i < myHash.size(); i++){
-			HashedObject currentHash = myHash.get(i);
-			if (currentHash.equals(currentHash.hmac_sha1(get_items_with_same_bit(i-1), currentHash.getKey())))
-				result += "0";
-			else 
-				result += "1";
-		}
-		
-		if (result != "")
-			return Integer.parseInt(result, 2);
-		else 
-			return 0;
-	}
-	
-	// For part 2
-	public String getEmbddedHash (){
-		String result = "";
-		for (int i = 0; i < levelsLeft.size(); i++){
-			Node temp = levelsLeft.get(i);
-			temp = temp.next;
-			while(temp.next != null) {
-				if (temp.above == null){
-					result += "0";
-				}
-				else 
-					result += "1";
-				
-				temp = temp.next;
-			}	
-		}
-		
-		int a = result.length();
-		int b = myHash.get(0).getHash().length();
-		if ( a <= b ){
-			if (result.equals(myHash.get(0).getHash().substring(0, a)))
-				return "No";
-			else 
-				return "Yes";
-		}
-		else {
-			if (result.equals(result.substring(0, b)))
-				return "No";
-			else 
-				return "Yes";			
-		}
+		return returnValue;
 	}
 	
 	// There are three kinds of nodes in a skip list.  All kinds of nodes
@@ -395,7 +333,6 @@ public class SkipList
 		// will cause the appropriate version of compareToSearchKey() to be
 		// called automatically).
 		public abstract int compareToSearchValue(int searchKey);
-		public abstract int compareToSearchKey(int index);
 	}
 
 
@@ -436,10 +373,6 @@ public class SkipList
 		{
 			return -1;
 		}
-
-		public int compareToSearchKey(int index) {
-			return -1;
-		}
 	}
 	
 	
@@ -452,10 +385,6 @@ public class SkipList
 		
 		public int compareToSearchValue(int searchKey)
 		{
-			return 1;
-		}
-
-		public int compareToSearchKey(int index) {
 			return 1;
 		}
 	}
@@ -495,22 +424,6 @@ public class SkipList
 				return -1;
 			}
 			else if (value > searchValue)
-			{
-				return 1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		
-		public int compareToSearchKey(int index)
-		{
-			if (key < index)
-			{
-				return -1;
-			}
-			else if (key > index)
 			{
 				return 1;
 			}

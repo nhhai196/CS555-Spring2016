@@ -1,0 +1,952 @@
+CS 555 SPRING 2016 PROJECT 1
+
+========== PART ONE ==========
+
+Reading from input.txt
+    Reading key.
+    Reading number of test cases.
+    Reading values for test case 1
+    Creating hash.
+    Creating Skip List
+    Reading values for test case 2
+    Creating hash.
+    Creating Skip List
+    Reading values for test case 3
+    Creating hash.
+    Creating Skip List
+Printing each created list to output_i.txt
+Beginning searching for items in each list.
+Reading search.txt
+Begin searching through each list.
+    Searching for value 5 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 4
+    Searching for value -20 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 16 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 8
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 15
+    Searching for value 29 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 26
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 109 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 26
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 251 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 26
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 79 in List 0
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 24
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 26
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 5 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 2
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 2
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 2
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 2
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 4
+    Searching for value -20 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 16 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 2
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 6
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 12
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 15
+    Searching for value 29 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 28
+    Searching for value 109 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 29
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 108
+    Searching for value 251 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 29
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 107
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 79 in List 1
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 29
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 43
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 43
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 74
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 74
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 74
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 78
+    Searching for value 5 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 3
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 3
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 3
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 4
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 4
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 4
+    Searching for value -20 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        At bottom of the skip list. Value was not found in skip list.
+    Searching for value 16 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 15
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 15
+    Searching for value 29 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 14
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 18
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 26
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 28
+    Searching for value 109 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 59
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 74
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 78
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 108
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 108
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 108
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 108
+    Searching for value 251 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 200
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 237
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 237
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 250
+    Searching for value 79 in List 2
+        At level 8
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 7
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value MINUS INFINITY.
+        At level 6
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 59
+        At level 5
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 74
+        At level 4
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 78
+        At level 3
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 78
+        At level 2
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 78
+        At level 1
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found node with greater value than value being searched for. Moving to previous node with value less than search value.
+        There is a node below the current one in the skip list.
+        Moving down to next level, starting at node with value 78
+        At level 0
+        Beginning search through this level
+            Value being searched for less than value of current node. Moving to next node
+        Found value in list at index 78
+
+========== PART TWO ==========
+
+Beginning Integrity Verification part of project.
