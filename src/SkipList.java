@@ -27,7 +27,7 @@ public class SkipList
 {
 	
 	private HashedObject myHash;
-	private String embeddedHash;
+	public String embeddedHash;
 	
 	private ArrayList<Integer> myElements;
 	
@@ -48,8 +48,8 @@ public class SkipList
 	
 	public SkipList(int numElements, ArrayList<Integer> elements, HashedObject hash)
 	{
-		
 		myHash = hash;
+		embeddedHash = hash.getHash();
 		myElements = new ArrayList<Integer>(elements);
 		
 		bottomNegativeInfinity = new NegativeInfinityNode();
@@ -87,13 +87,15 @@ public class SkipList
 		numberOfElements = llelements.get(0).size();
 		searchNode = null;
 		embeddedHash = initList2(llelements);
+		System.out.println("Number of levels: " + numberOfLevels);
 	}
 	
 	private String initList2(ArrayList <ArrayList<Integer>> llelements){
 		int loop = llelements.size();
+		System.out.println(loop);
 		String embedhash = "";
-		for (int j = 0; j < loop; j++){
-			
+		for (int j = 0; j < loop-1; j++){
+			//System.out.println("building level " + (j+1) );
 			if(numberOfLevels == 1) {
 				Node temp = top;
 				int key = 0;
@@ -142,15 +144,20 @@ public class SkipList
 							upper = upper.next;
 							
 							embedhash += "1";
+							lower = lower.next;
+							break;
 						}
-						else 
+						else
+						{
 							embedhash += "0";
+							lower = lower.next;
+						}
 						
-						lower = lower.next;
 					}
 				}
 				upper.next = upperEnd;
 				upperEnd.prev = upper;
+				//System.out.println("building level " + numberOfLevels );
 				if(upper.prev != null) { // things were added; need to build up and recurse.
 					
 					Node negInf = new NegativeInfinityNode();
@@ -166,10 +173,10 @@ public class SkipList
 					levelsRight.add(posInf);
 					top = negInf;
 					numberOfLevels++;
-					//initList2(llelements);
 				}
 			}
 		}
+		System.out.println("Embedded hash: " + embedhash.substring(0, 20));
 		return embedhash;
 	}
 	
@@ -367,21 +374,11 @@ public class SkipList
 		return returnValue;
 	}
 	
-	public String corrupted(String key) throws Exception {
-		String concat = "";
-		// Get the pointer to the first level of the skip list 
-		Node temp = levelsLeft.get(0);
-		temp = temp.next;
-		
-		while(temp.next != null) {
-			concat += Integer.toString(temp.getValue());
-			temp = temp.next;
-		}
-		
-		if (myHash.getHash().equals(myHash.hmac_sha1(concat, key)))
-			return "No";
-		else
-			return "Yes";		
+	public boolean corrupted(String key) throws Exception {
+		if (embeddedHash.subSequence(0, 160).equals(myHash.hashArray[0]))
+			return false;
+		else 
+			return true;
 	}
 	
 	/*
@@ -427,18 +424,50 @@ public class SkipList
 	public int pinpointCorruptedItem(String key) throws Exception {
 		String result = "";
 		String [] hashList = embeddedHash.split("(?<=\\G.{160})");
-		for (int i = 1; i < myHash.getHashArray().length; i++){
-			 String temp = myHash.getHashArray()[i];
-			if (temp.equals(hashList[i]))
-				result += "0";
-			else 
-				result += "1";
+		int l = myHash.getHashArray().length;
+		if (hashList.length < l)
+			throw new Exception("n is too small, embeded less than 1 + log n hashes");
+		else {
+			for (int i = 1; i < l; i++){
+				 String temp = myHash.getHashArray()[i];
+				 //System.out.println(temp);
+				 //System.out.println(hashList[i]);
+				if (temp.equals(hashList[i])) 
+					result += "0";
+				else 
+					result += "1";
+			}
 		}
+		
+		// reverse the result 
+		result = new StringBuilder(result).reverse().toString();
 		
 		if (result != "")
 			return Integer.parseInt(result, 2);
 		else 
 			return 0;
+	}
+	
+	// This function is just for testing 
+	public void modify(int key) throws Exception {
+		if (key >= numberOfElements)
+			throw new Exception("out of range");
+		else {
+			Node temp = levelsLeft.get(0);
+			temp = temp.next;
+			for (int i = 0; i < numberOfElements; i++){
+				if (temp.getKey() != key){
+					temp = temp.next;
+				}
+				else break;
+			}
+			
+			// modify the columns with index k of the skip list 
+			while(temp != null) {
+				temp.setValue(temp.getValue() +1); // increase value by 1
+				temp = temp.above;
+			}
+		}
 	}
 	
 	// There are three kinds of nodes in a skip list.  All kinds of nodes

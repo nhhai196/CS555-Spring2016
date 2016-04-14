@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HashedObject {
-private int bitPosition;
+	private int bitPosition;
 	private ArrayList<Integer> input;
 	private byte[] key;
 	private String hash;
@@ -71,8 +71,7 @@ private int bitPosition;
 		
 		for(int j = 0; j < logn+1; j++)
 		{	
-			AllHash[j] = hmac_sha1(AllHash[j], keyString);
-			result += AllHash[j];
+			result += hmac_sha1(AllHash[j], keyString);
 		}
 		
 		return result;
